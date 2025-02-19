@@ -38,7 +38,7 @@ require("lazy").setup({
 		    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 		    "MunifTanjim/nui.nvim",
 		    -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
-		  }	
+		  },
 		},
 
 		-- LSP Setup
@@ -113,7 +113,7 @@ vim.cmd(":Neotree")
 
 --local tree = require('Neotree')
 
-vim.keymap.set('n', '<leader>t', vim.cmd(":Neotree toggle"), {desc = 'Toggle Neotree'})
+vim.keymap.set('n', '<leader>t', "<CMD>Neotree toggle<CR>", {desc = 'Toggle Neotree'})
 
 
 
@@ -126,7 +126,20 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' 
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 
-
+-- coc Keybinds
+--
+-- Use K to show documentation in preview window
+function _G.show_docs()
+    local cw = vim.fn.expand('<cword>')
+    if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+        vim.api.nvim_command('h ' .. cw)
+    elseif vim.api.nvim_eval('coc#rpc#ready()') then
+        vim.fn.CocActionAsync('doHover')
+    else
+        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+    end
+end
+vim.keymap.set("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
 
 
