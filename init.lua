@@ -51,12 +51,40 @@ require("lazy").setup({
 		
 		-- Colorscheme
 		{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
-
+		{"oxfist/night-owl.nvim", name="night-owl", lazy=false, priority=1000},
+	
 		-- add your plugins here
+	
+		-- Keymaps shower
+		{
+		  "folke/which-key.nvim",
+		  event = "VeryLazy",
+		  opts = {
+		    -- your configuration comes here
+		    -- or leave it empty to use the default settings
+		    -- refer to the configuration section below
+		  },
+		  keys = {
+		    {
+		      "<leader>?",
+		      function()
+			require("which-key").show({ global = false })
+		      end,
+		      desc = "Buffer Local Keymaps (which-key)",
+		    },
+		  },
+		},
+		--FUZZY FInder
+		{
+		'nvim-telescope/telescope.nvim', tag = '0.1.8',
+		}
+
+
+
 	},	
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "moonfly" } },
+	install = { colorscheme = { "night-owl" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 
@@ -79,8 +107,34 @@ vim.g.coc_global_extensions = {
 
 
 vim.cmd(":set number")
+vim.cmd(":Neotree")
+
+--Custom Keybind: .set("mode", 'keycom', command, {des = 'des'})
+
+--local tree = require('Neotree')
+
+vim.keymap.set('n', '<leader>t', vim.cmd(":Neotree toggle"), {desc = 'Toggle Neotree'})
 
 
---Custom Keybind
 
---local keyset = vim.key.set 
+
+-- Fuzzy finder keybinds
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
