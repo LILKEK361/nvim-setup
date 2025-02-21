@@ -108,7 +108,7 @@ vim.g.coc_global_extensions = {
 
 vim.cmd(":set number")
 vim.cmd(":Neotree")
-
+vim.cmd.(":colorsheme night-owl")
 --Custom Keybind: .set("mode", 'keycom', command, {des = 'des'})
 
 --local tree = require('Neotree')
