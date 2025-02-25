@@ -52,7 +52,8 @@ require("lazy").setup({
 		-- Colorscheme
 		{ "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
 		{"oxfist/night-owl.nvim", name="night-owl", lazy=false, priority=1000},
-	
+		{"https://github.com/maxmx03/solarized.nvim", name="solarized", lazy=false, priority=1000},	
+        
 		-- add your plugins here
 	
 		-- Keymaps shower
@@ -77,8 +78,11 @@ require("lazy").setup({
 		--FUZZY FInder
 		{
 		'nvim-telescope/telescope.nvim', tag = '0.1.8',
+		},
+		-- Docs
+		{
+		  "kkoomen/vim-doge",
 		}
-
 
 
 	},	
@@ -108,7 +112,8 @@ vim.g.coc_global_extensions = {
 
 vim.cmd(":set number")
 vim.cmd(":Neotree")
-vim.cmd.(":colorsheme night-owl")
+vim.cmd(":colorscheme moonfly")
+
 --Custom Keybind: .set("mode", 'keycom', command, {des = 'des'})
 
 --local tree = require('Neotree')
