@@ -82,7 +82,12 @@ require("lazy").setup({
 		-- Docs
 		{
 		  "kkoomen/vim-doge",
+		},
+			--Surround
+		{
+		  "tpope/vim-surround"
 		}
+
 
 
 	},	
