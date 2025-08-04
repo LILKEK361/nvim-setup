@@ -86,19 +86,48 @@ require("lazy").setup({
 			--Surround
 		{
 		  "tpope/vim-surround"
-		}
+		},
+		-- Colorshemes
+		{
+		"scottmckendry/cyberdream.nvim",
+			lazy = false,
+			priority = 1000,
+		},
+		-- Debugger
+		{ "rcarriga/nvim-dap-ui", enabled = false },
+		{
+			"miroshQa/debugmaster.nvim",
+			-- osv is needed if you want to debug neovim lua code. Also can be used 
+			-- as a way to quickly test-drive the plugin without configuring debug adapters 
+			dependencies = { "mfussenegger/nvim-dap", "jbyuki/one-small-step-for-vimkind", },
+			config = function()
+			local dm = require("debugmaster")
+			-- make sure you don't have any other keymaps that starts with "<leader>d" to avoid delay
+			-- Alternative keybindings to "<leader>d" could be: "<leader>m", "<leader>;"
+			vim.keymap.set({ "n", "v" }, "<leader>m", dm.mode.toggle, { nowait = true })
+			-- If you want to disable debug mode in addition to leader+d using the Escape key:
+			vim.keymap.set("n", "<Esc>", dm.mode.disable)
+			-- This might be unwanted if you already use Esc for ":noh"
+			vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-
+			dm.plugins.osv_integration.enabled = true -- needed if you want to debug neovim lua code
+			local dap = require("dap")
+			-- Configure your debug adapters here
+			-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+			end
+		},
+	
+		
 
 	},	
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "night-owl" } },
+	
 	-- automatically check for plugin updates
 	checker = { enabled = true },
 
 })
-
+require("lazy").setup("plugins")
 
 -- Coc settings
 vim.g.coc_global_extensions = {
@@ -117,12 +146,11 @@ vim.g.coc_global_extensions = {
 
 vim.cmd(":set number")
 vim.cmd(":Neotree")
-vim.cmd(":colorscheme moonfly")
+vim.cmd(":colorscheme cyberdream")
+
 
 --Custom Keybind: .set("mode", 'keycom', command, {des = 'des'})
-
 --local tree = require('Neotree')
-
 vim.keymap.set('n', '<leader>t', "<CMD>Neotree toggle<CR>", {desc = 'Toggle Neotree'})
 
 
@@ -135,6 +163,8 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live gr
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
+
+-- Debugger keybinds / Setup
 
 -- coc Keybinds
 --
